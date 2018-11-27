@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ysd.ooo.dao.StatisticsDao">
+
+
+	<insert id="insertStatistics" parameterType="Statistics">
+		insert into
+		Statistics(ReadRoomID,PeopleNums,Year,Month,Day)
+		values(#{ReadRoomID},#{PeopleNums},#{Year},#{Month},#{Day})
+	</insert>
+
+	<!-- 查询当前日期的记录的人次 -->
+	<select id="selectpoplenum" parameterType="integer" resultType="integer">
+		select PeopleNums from
+		statistics where ReadRoomID=#{readid} and
+		Year=DATE_FORMAT(NOW(),'%Y') and Month=DATE_FORMAT(NOW(),'%m') and
+		Day=DATE_FORMAT(NOW(),'%d')
+	</select>
+	
+	
+
+
+</mapper>

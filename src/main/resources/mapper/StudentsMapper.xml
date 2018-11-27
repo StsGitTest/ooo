@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ysd.ooo.dao.StudentDao">
+
+	<select id="selectstu" resultType="students">
+		select *from students
+	</select>
+
+	<select id="selectstuduo" resultType="students">
+		select *from students where
+		id in(${id})
+
+	</select>
+
+
+	<select id="selectstuer" resultType="students"
+		parameterType="studentsQuery">
+		select *from students
+		<where>
+			<if test="Name!=null and Name!=''">
+				Name like "%"#{Name}"%"
+			</if>
+			<if test="MembershipID!=null and MembershipID!=''">
+				and MembershipID=#{MembershipID}
+			</if>
+		</where>
+		limit #{offset},#{rows}
+	</select>
+
+
+
+	<select id="suijiselect" resultType="students">
+		select * from students order
+		by rand() LIMIT 1
+	</select>
+
+
+	<insert id="addstu" parameterType="students">
+		insert into students
+		(CardNO,Name,Sex,MembershipID,Status,Remark,StuNO)
+		values(#{CardNO},#{Name},#{Sex},#{MembershipID},#{Status},#{Remark},#{StuNO})
+	</insert>
+
+
+	<delete id="deletestu" parameterType="Integer">
+		delete from students where
+		id=#{stuid}
+	</delete>
+
+
+	<update id="updatestu" parameterType="students">
+		update students
+		<set>
+			<if test="Name!=null || Name!=''">
+				Name=#{Name},
+			</if>
+			<if test="Sex!=null || Sex!=''">
+				Sex=#{Sex},
+			</if>
+			<if test="Remark!=null  ||  Remark!=''">
+				Remark=#{Remark},
+			</if>
+			<if test="MembershipID!=null || MembershipID!=''">
+				MembershipID=#{MembershipID},
+			</if>
+
+		</set>
+		where ID=#{ID}
+	</update>
+
+
+
+
+</mapper>

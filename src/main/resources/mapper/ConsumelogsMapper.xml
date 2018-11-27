@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ysd.ooo.dao.ConsumelogsDao">
+
+	<!-- 添加记录 -->
+	<insert id="insertlog" parameterType="consumelogs">
+		insert into
+		Consumelogs(CardNO,ReadRoomID,InTime,OutTime,Status)
+		values(#{CardNO},#{ReadRoomID},#{InTime},#{OutTime},#{Status})
+	</insert>
+
+	<select id="selectfromcardid" resultType="consumelogs">
+		select *from
+		consumelogs where CardNO=#{id}
+	</select>
+
+	<update id="updateconsumlog" parameterType="consumelogs">
+		update consumelogs
+		<set>
+			<if test="ReadRoomID!=null || ReadRoomID!=''">
+				ReadRoomID=#{ReadRoomID},
+			</if>
+			<if test="InTime!=null || InTime!=''">
+				InTime=#{InTime},
+			</if>
+			<if test="OutTime!=null || OutTime!=''">
+				OutTime=#{OutTime},
+			</if>
+			<if test="Status!=null || Status!=''">
+				Status=#{Status},
+			</if>
+		</set>
+		where CardNO=#{CardNO}
+	</update>
+
+
+	<select id="selectConsumelogsnum" resultType="consumelogs">
+		select *from
+		Consumelogs where ReadRoomID=#{readid} AND TO_DAYS(InTime) =TO_DAYS(NOW())
+	</select>
+
+
+
+</mapper>
